@@ -27,6 +27,7 @@ def subscriber_new(request, template="subscribers/subscriber_new.html"):
             state = form.cleaned_data['state']
             sub = Subscriber(address_one=address_one, address_two=address_two,
                              city=city, state=state, user_rec=user)
+            sub.save()
             # Process payment (via Stripe)
             # Auto login the user
             return HttpResponseRedirect('/success/')
