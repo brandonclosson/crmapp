@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
+
+import stripe
 
 class Subscriber(models.Model):
     user_rec = models.ForeignKey(User)
@@ -12,5 +15,30 @@ class Subscriber(models.Model):
     class Meta:
         verbose_name_plural = 'subscribers'
 
-    def __unicode(self):
+    def __unicode__(self):
         return u"%s's Subscription Info" % self.user_rec
+
+    def charge(self, request, email, fee):
+        stripe.api_key = settings.STRIPE_SECRET_KEY
+
+        # Get the credit card details submitted by the form
+        token = request.POST['stripeToken']
+
+        # Create a Customer
+        stripe_customer = stripe.Customer.create(
+            card=token,
+            description=email
+        )
+
+        # Save the Stripe ID to the customer
+        self.stripe_id = stripe_customer.id
+        self.save()
+
+        # Charge the Customer instead of the card
+        stripe.Charge.create(
+            amount=fee,
+            currency="usd",
+            customer=stripe_customer.id
+        )
+
+        return stripe_customer
