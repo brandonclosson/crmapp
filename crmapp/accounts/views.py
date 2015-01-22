@@ -34,7 +34,7 @@ class AccountList(ListView):
 @login_required()
 def account_detail(request, uuid):
 	account = Account.objects.get(uuid=uuid)
-	if account.own != request.user:
+	if account.owner != request.user:
 		return HttpResponseForbidden()
 	
 	variables = {
