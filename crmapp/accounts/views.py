@@ -52,19 +52,19 @@ def account_cru(request):
 		if form.is_valid():
 			account = form.save(commit=False)
 			account.owner = request.user
-			acount.save()
+			account.save()
 			redirect_url = reverse(
 				'crmapp.accounts.views.account_detail',
 				args=(account.uuid,)
 			)
 			return HttpResponseRedirect(redirect_url)
-		else:
-			form = AccountForm()
+	else:
+		form = AccountForm()
 
-		variable = {
-			'form': form,
-		}
+	variables = {
+		'form': form,
+	}
 
-		template = 'accounts/account_cru.html'
+	template = 'accounts/account_cru.html'
 
-		return render(request, template, variables)
+	return render(request, template, variables)
