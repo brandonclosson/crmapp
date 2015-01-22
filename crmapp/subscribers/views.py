@@ -1,7 +1,7 @@
 from django.conf import settings
-from django.conf.urlresolvers import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.forms.forms import NON_FIELD_ERRORS
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -41,7 +41,7 @@ def subscriber_new(request, template="subscribers/subscriber_new.html"):
             except stripe.StripeError as e:
                 form._errors[NON_FIELD_ERRORS] = form.error_class([e.args[0]])
                 return render(request, template,
-                    {'form':form
+                    {'form':form,
                      'STRIPE_PUBLISHABLE_KEY':settings.STRIPE_PUBLISHABLE_KEY}
                 )
             # Auto login the user
