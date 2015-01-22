@@ -3,6 +3,7 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+from accounts.urls import account_urls
 from accounts.views import AccountList
 from marketing.views import HomePage
 
@@ -22,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^account/list/$',
     	AccountList.as_view(), name="account_list"
     ),
+    url(r'^account/(?P<uuid>[\w-]+)/', include(account_urls)),
 
     (r'^admin/', include(admin.site.urls)),
 )
