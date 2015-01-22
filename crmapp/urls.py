@@ -3,6 +3,7 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+from accounts.views import AccountList
 from marketing.views import HomePage
 
 urlpatterns = patterns('',
