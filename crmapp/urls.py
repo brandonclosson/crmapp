@@ -23,9 +23,6 @@ urlpatterns = patterns('',
     url(r'^account/new/$',
         'crmapp.accounts.views.account_cru', name='account_new'
     ),
-    url(r'^account/edit/$',
-        'crmapp.accounts.views.account_cru', name='account_update'
-    ),
     url(r'^account/list/$',
     	AccountList.as_view(), name="account_list"
     ),
